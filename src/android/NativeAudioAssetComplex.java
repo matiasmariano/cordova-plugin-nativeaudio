@@ -28,9 +28,13 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	private MediaPlayer mp;
 	private int state;
     Callable<Void> completeCallback;
+	private AssetFileDescriptor afdd;
+	private float volumen;
 
 	public NativeAudioAssetComplex( AssetFileDescriptor afd, float volume)  throws IOException
 	{
+		afdd = afd;
+		volumen = volume;
 		state = INVALID;
 		mp = new MediaPlayer();
         mp.setOnCompletionListener(this);
@@ -130,6 +134,14 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	{
 		this.stop();
 		mp.release();
+		state = INVALID;
+		mp = new MediaPlayer();
+		mp.setOnCompletionListener(this);
+        	mp.setOnPreparedListener(this);
+		mp.setDataSource( afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+		mp.setAudioStreamType(AudioManager.STREAM_MUSIC); 
+		mp.setVolume(volume, volume);
+		mp.prepare();
 	}
 	
 	public void onPrepared(MediaPlayer mPlayer) 
