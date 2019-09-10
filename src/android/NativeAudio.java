@@ -106,6 +106,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	private PluginResult executePlayOrLoop(String action, JSONArray data) {
 		final String audioID;
 		try {
+			this.pluginInitialize();
 			audioID = data.getString(0);
 			//Log.d( LOGTAG, "play - " + audioID );
 
@@ -168,16 +169,12 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 				NativeAudioAsset asset = assetMap.get(audioID);
 				asset.unload();
 				assetMap.remove(audioID);
-				this.pluginInitialize();
 			} else {
-				this.pluginInitialize();
 				return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
 			}
 		} catch (JSONException e) {
-			this.pluginInitialize();
 			return new PluginResult(Status.ERROR, e.toString());
 		} catch (IOException e) {
-			this.pluginInitialize();
 			return new PluginResult(Status.ERROR, e.toString());
 		}
 		
