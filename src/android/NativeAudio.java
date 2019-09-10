@@ -313,7 +313,10 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		// Request permanent focus.
 		AudioManager.AUDIOFOCUS_GAIN);
         } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
-           //
+		
+           	//Context ctx = cordova.getActivity().getApplicationContext();
+		AssetManager am = Context.getResources().getAssets();
+		am.abandonAudioFocus(null);
         }
     }
 
