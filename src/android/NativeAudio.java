@@ -168,12 +168,16 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 				NativeAudioAsset asset = assetMap.get(audioID);
 				asset.unload();
 				assetMap.remove(audioID);
+				this.pluginInitialize();
 			} else {
+				this.pluginInitialize();
 				return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
 			}
 		} catch (JSONException e) {
+			this.pluginInitialize();
 			return new PluginResult(Status.ERROR, e.toString());
 		} catch (IOException e) {
+			this.pluginInitialize();
 			return new PluginResult(Status.ERROR, e.toString());
 		}
 		
@@ -315,7 +319,6 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
         } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
 		/*AudioManager am = (AudioManager)cordova.getActivity().getSystemService(Context.AUDIO_SERVICE);
 		am.abandonAudioFocus(null);*/
-		this.pluginInitialize();
         } else if (focusChange == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
 	    	
         }
