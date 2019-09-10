@@ -302,19 +302,16 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	}
 
     public void onAudioFocusChange(int focusChange) {
-	if(focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK){
-		AudioManager am = (AudioManager)cordova.getActivity().getSystemService(Context.AUDIO_SERVICE);
+        if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
+            //asset.pause();
+        } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+	    AudioManager am = (AudioManager)cordova.getActivity().getSystemService(Context.AUDIO_SERVICE);
 
 		int result = am.requestAudioFocus(this,
 		// Use the music stream.
 		AudioManager.STREAM_MUSIC,
 		// Request permanent focus.
 		AudioManager.AUDIOFOCUS_GAIN);
-	}
-        if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
-            //asset.pause();
-        } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
-	    //
         } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
            //
         }
